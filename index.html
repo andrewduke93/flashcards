@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcards: Acquiring, Banking, and Payables</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .flashcard {
+            width: 80%;
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+            font-size: 18px;
+        }
+        .controls {
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Flashcards: Acquiring, Banking, and Payables</h1>
+    <div class="flashcard" onclick="toggleAnswer()">
+        <p id="flashcard-text"></p>
+    </div>
+    <div class="controls">
+        <button onclick="prevCard()">Previous</button>
+        <button onclick="shuffleCards()">Shuffle</button>
+        <button onclick="nextCard()">Next</button>
+    </div>
+    <script>
+        let flashcards = [
+           
+
+            {question: "1. What is acquiring?", answer: "Acquiring means handling payments on behalf of merchants, ensuring transactions go through smoothly."},
+            {question: "2. How does transaction approval work?", answer: "Transaction approval involves verification by an acquiring bank, card networks, and an issuing bank before completion."},
+            {question: "3. What is a chargeback ratio?", answer: "Chargeback ratio is the percentage of transactions that get disputed and reversed, indicating potential fraud or poor merchant practices."},
+            {question: "4. What is fund settlement?", answer: "Fund settlement ensures money moves correctly between accounts and reconciles transactions."},
+            {question: "5. What is invoice processing?", answer: "Invoice processing involves approving and paying supplier invoices, often through automation to reduce errors."},
+            {question: "6. How does AI improve fraud detection?", answer: "AI analyzes transaction patterns to detect and flag fraudulent activities."},
+            {question: "7. What are key KPIs in acquiring?", answer: "Approval rate, chargeback ratio, and transaction success rate are critical KPIs in acquiring."},
+            {question: "8. How can data be used in banking operations?", answer: "Data helps track reconciliation accuracy, settlement speed, and fraud detection success rates."},
+            {question: "9. What is liquidity management?", answer: "Ensuring a company has enough cash available to meet its obligations and optimize financial operations."},
+            {question: "10. How can automation improve invoice approval workflows?", answer: "By reducing manual errors, speeding up approvals, and improving vendor relationships."},
+            {question: "11. What is an ACH payment?", answer: "ACH stands for Automated Clearing House, a system for electronic funds transfers."},
+            {question: "12. How does settlement speed impact banking?", answer: "Faster settlements improve cash flow and reduce counterparty risk."},
+            {question: "13. Why is chargeback prevention important?", answer: "It reduces financial loss, improves merchant credibility, and enhances customer trust."},
+            {question: "14. What is reconciliation accuracy?", answer: "It ensures transactions match financial records to prevent errors and fraud."},
+            {question: "15. What is the role of an issuing bank?", answer: "An issuing bank approves or declines transactions based on the cardholder's balance and risk assessment."},
+            {question: "16. Why is fraud detection crucial in acquiring?", answer: "To minimize chargebacks, prevent unauthorized transactions, and ensure regulatory compliance."},
+            {question: "17. What is a rolling reserve?", answer: "A portion of a merchant’s funds held as a safeguard against chargebacks."},
+            {question: "18. How does payment network compliance affect acquiring?", answer: "It ensures adherence to rules set by Visa, MasterCard, and other payment networks."},
+            {question: "19. What is a merchant category code (MCC)?", answer: "A four-digit code used to classify businesses based on the types of goods or services they provide."},
+            {question: "20. What does PCI DSS stand for?", answer: "Payment Card Industry Data Security Standard, a set of security measures for handling cardholder data."},
+            {question: "21. What is network tokenization?", answer: "A security measure that replaces card numbers with unique tokens for transactions."},
+            {question: "22. Why do merchants monitor refund rates?", answer: "High refund rates may indicate fraud or poor customer satisfaction."},
+            {question: "23. What is an acquiring bank’s role in settlement?", answer: "It ensures funds from customer payments are correctly distributed to merchants."},
+            {question: "24. How does AI optimize transaction approvals?", answer: "By dynamically adjusting fraud rules to reduce false declines."},
+            {question: "25. What does KYC stand for?", answer: "Know Your Customer, a process to verify the identities of customers."},
+            {question: "26. What is chargeback representment?", answer: "A process where merchants provide evidence to dispute and reverse chargebacks."},
+            {question: "27. How do issuing banks impact transaction approvals?", answer: "They assess fraud risk and customer balance before approving transactions."},
+            {question: "28. Why are compliance audits important in payments?", answer: "They ensure businesses follow regulatory requirements and avoid penalties."},
+            {question: "29. What does DPO stand for in payables?", answer: "Days Payable Outstanding, which measures how long it takes a business to pay suppliers."},
+            {question: "30. How do businesses track cash flow trends?", answer: "By analyzing inflows and outflows over time."},
+            {question: "31. Why is automated reconciliation beneficial?", answer: "It reduces errors, speeds up financial reporting, and enhances fraud detection."},
+            {question: "32. What is an ISO in acquiring?", answer: "An Independent Sales Organization that partners with acquiring banks to sign up merchants."},
+            {question: "33. Why do businesses use alternative payment methods?", answer: "To attract more customers and reduce processing costs."},
+            {question: "34. How does real-time payment processing benefit merchants?", answer: "It speeds up fund availability and reduces settlement risks."},
+            {question: "35. What is a BIN in payments?", answer: "Bank Identification Number, the first six digits of a credit card that identify the issuing bank."},
+            {question: "36. What is the role of a chargeback mitigation service?", answer: "It helps merchants prevent and manage chargebacks to reduce financial losses."},
+            {question: "37. What are merchant reserves?", answer: "Funds held by an acquiring bank to cover potential chargebacks or fraud."},
+            {question: "38. How does 3D Secure improve transaction security?", answer: "It adds an extra authentication layer for online card transactions."},
+            {question: "39. What is a high-risk merchant?", answer: "A business categorized as high-risk due to fraud potential or regulatory scrutiny."},
+            {question: "40. Why do businesses monitor authorization rates?", answer: "To identify issues with declined transactions and optimize payment acceptance."},
+            {question: "41. What is the role of a payment facilitator?", answer: "A third party that enables businesses to accept electronic payments without a direct merchant account."},
+            {question: "42. What is a chargeback reason code?", answer: "A code assigned to chargebacks to indicate the reason for the dispute."},
+            {question: "43. How does an issuing bank verify transactions?", answer: "It checks cardholder details, available funds, and fraud risk before approving or declining."},
+            {question: "44. What is a rolling reserve in acquiring?", answer: "A portion of merchant revenue withheld to cover potential financial risks."},
+            {question: "45. Why are interchange fees important?", answer: "They compensate issuing banks for processing transactions and managing risks."},
+            {question: "46. What is a gateway timeout in payment processing?", answer: "A failure where the payment gateway does not receive a timely response from the bank or processor."},
+            {question: "47. Why do merchants need to comply with PCI DSS?", answer: "To protect customer data and prevent breaches in payment processing."},
+            {question: "48. What is a payment settlement delay?", answer: "A delay between a transaction’s authorization and the merchant receiving funds."},
+            {question: "49. What is an alternative payment method (APM)?", answer: "A non-traditional payment method such as digital wallets or buy-now-pay-later services."},
+            {question: "50. Why do merchants need transaction reconciliation?", answer: "To ensure all processed payments match bank deposits and avoid discrepancies."}
+        ];
+        
+        let currentIndex = 0;
+        let showAnswer = false;
+        
+        function toggleAnswer() {
+            showAnswer = !showAnswer;
+            document.getElementById("flashcard-text").innerText = showAnswer ? flashcards[currentIndex].answer : flashcards[currentIndex].question;
+        }
+        
+        function nextCard() {
+            showAnswer = false;
+            currentIndex = (currentIndex + 1) % flashcards.length;
+            document.getElementById("flashcard-text").innerText = flashcards[currentIndex].question;
+        }
+        
+        function prevCard() {
+            showAnswer = false;
+            currentIndex = (currentIndex - 1 + flashcards.length) % flashcards.length;
+            document.getElementById("flashcard-text").innerText = flashcards[currentIndex].question;
+        }
+        
+        function shuffleCards() {
+            flashcards = flashcards.sort(() => Math.random() - 0.5);
+            currentIndex = 0;
+            showAnswer = false;
+            document.getElementById("flashcard-text").innerText = flashcards[currentIndex].question;
+        }
+        
+        document.getElementById("flashcard-text").innerText = flashcards[currentIndex].question;
+    </script>
+</body>
+</html>
